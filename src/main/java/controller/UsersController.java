@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 public class UsersController {
     private UsersDao dao;
-    private final int USERS_PER_PAGE = 10;
+    private static final int USERS_PER_PAGE = 10;
 
     @RequestMapping(value = "/users.html", method = RequestMethod.GET)
     public ModelAndView getAllUsers() {
