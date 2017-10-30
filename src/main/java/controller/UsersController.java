@@ -1,8 +1,9 @@
 package controller;
 
 import dao.UsersDao;
-import dao.UsersDaoImpl;
 import model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,12 +15,13 @@ import java.util.List;
 
 @Controller
 public class UsersController {
+    @Autowired
+    @Qualifier("UsersDao")
     private UsersDao dao;
-    private static final int USERS_PER_PAGE = 10;
+    public static final int USERS_PER_PAGE = 10;
 
     @RequestMapping(value = "/users.html", method = RequestMethod.GET)
     public ModelAndView getAllUsers() {
-        dao = new UsersDaoImpl();
         List<User> users = dao.getAll();
         if (users.size() <= USERS_PER_PAGE) {
             ModelAndView modelAndView = new ModelAndView("Users");
@@ -33,7 +35,6 @@ public class UsersController {
     @RequestMapping(value = "/users/page/{pageId}")
     public ModelAndView getUsersPerPage(@PathVariable("pageId") int pageId) {
         ModelAndView modelAndView = new ModelAndView("UsersPerPage");
-        dao = new UsersDaoImpl();
         List<User> users = dao.getAll();
         int numberOfPages = (int) Math.ceil((double) users.size() / (double) USERS_PER_PAGE);
         List<User> usersPerPage = dao.getUsersPerPage((pageId * USERS_PER_PAGE - USERS_PER_PAGE), USERS_PER_PAGE);
@@ -44,7 +45,6 @@ public class UsersController {
 
     @RequestMapping(value = "/usersSearch.html", method = RequestMethod.POST)
     public ModelAndView search(@RequestParam("name") String name) {
-        dao = new UsersDaoImpl();
         List<User> usersFilteredByName = dao.getByName(name);
         if (usersFilteredByName.size() == 0) {
             ModelAndView modelAndView = new ModelAndView("NoUsersFound");
@@ -65,7 +65,6 @@ public class UsersController {
     @RequestMapping(value = "/createUser.html", method = RequestMethod.POST)
     public String userAdded(@RequestParam("name") String name, @RequestParam("age") String age,
                             @RequestParam(value = "isAdmin", defaultValue = "false") Boolean isAdmin) {
-        dao = new UsersDaoImpl();
         User user = new User();
         user.setName(name);
         user.setAge(Integer.parseInt(age));
@@ -76,14 +75,12 @@ public class UsersController {
 
     @RequestMapping(value = "/deleteUser/{userId}")
     public String deleteUser(@PathVariable("userId") Integer userId) {
-        dao = new UsersDaoImpl();
         dao.deleteUser(userId);
         return "redirect:/users.html";
     }
 
     @RequestMapping(value = "/editUser/{userId}")
     public ModelAndView editUser(@PathVariable("userId") Integer userId) {
-        dao = new UsersDaoImpl();
         ModelAndView modelAndView = new ModelAndView("EditUser");
         User user = dao.getById(userId);
         modelAndView.addObject("user", user);
@@ -94,7 +91,6 @@ public class UsersController {
     public String editDaoUser(@PathVariable("userId") Integer userId, @RequestParam("name") String name,
                               @RequestParam("age") String age,
                               @RequestParam(value = "isAdmin",defaultValue = "false") Boolean isAdmin) {
-        dao = new UsersDaoImpl();
         User user = dao.getById(userId);
         user.setName(name);
         user.setAge(Integer.parseInt(age));
