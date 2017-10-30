@@ -13,6 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+/**
+ * Test doc
+ */
 @Controller
 public class UsersController {
     @Autowired
