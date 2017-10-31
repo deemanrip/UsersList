@@ -13,9 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-/**
- * test commit
- */
 @Controller
 public class UsersController {
     @Autowired
