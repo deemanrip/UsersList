@@ -21,7 +21,7 @@ public class User {
     private Integer age;
 
     @Column(name = "isAdmin", columnDefinition = "boolean default false", nullable = false)
-    private Boolean admin = false;
+    private boolean admin = false;
 
     @Column(name = "createdDate")
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -48,11 +48,11 @@ public class User {
         this.age = age;
     }
 
-    public Boolean getAdmin() {
+    public boolean getAdmin() {
         return admin;
     }
 
-    public void setAdmin(Boolean admin) {
+    public void setAdmin(boolean admin) {
         this.admin = admin;
     }
 
