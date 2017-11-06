@@ -19,7 +19,7 @@
 	Age:
 	</td>
 	<td>
-	<input type="text" name="age"/>
+	<input type="number" name="age"/>
 	</td>
 </tr>
 <tr>

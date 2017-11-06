@@ -22,7 +22,7 @@
 		Age:
 	</td>
 	<td>
-	<input type="text" value="${user.age}" name="age"/>
+	<input type="number" value="${user.age}" name="age"/>
 	</td>
 	</tr>
 	<c:choose>

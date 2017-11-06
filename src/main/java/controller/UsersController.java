@@ -63,11 +63,11 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/createUser.html", method = RequestMethod.POST)
-    public String userAdded(@RequestParam("name") String name, @RequestParam("age") String age,
+    public String userAdded(@RequestParam("name") String name, @RequestParam("age") int age,
                             @RequestParam(value = "isAdmin", defaultValue = "false") boolean isAdmin) {
         User user = new User();
         user.setName(name);
-        user.setAge(Integer.parseInt(age));
+        user.setAge(age);
         user.setAdmin(isAdmin);
         dao.saveUser(user);
         return "redirect:/users.html";
@@ -89,11 +89,11 @@ public class UsersController {
 
     @RequestMapping(value = "/editUser/{userId}", method = RequestMethod.POST)
     public String editDaoUser(@PathVariable("userId") Integer userId, @RequestParam("name") String name,
-                              @RequestParam("age") String age,
+                              @RequestParam("age") int age,
                               @RequestParam(value = "isAdmin",defaultValue = "false") boolean isAdmin) {
         User user = dao.getById(userId);
         user.setName(name);
-        user.setAge(Integer.parseInt(age));
+        user.setAge(age);
         user.setAdmin(isAdmin);
         dao.updateUser(user);
         return "redirect:/users.html";
