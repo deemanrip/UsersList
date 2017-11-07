@@ -17,7 +17,7 @@ public class UsersDaoImpl implements UsersDao {
         List<User> users = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM User");
+            Query<User> query = session.createQuery("FROM User", User.class);
             users = query.list();
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -32,7 +32,7 @@ public class UsersDaoImpl implements UsersDao {
         List<User> users = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM User WHERE name=:paramName");
+            Query<User> query = session.createQuery("FROM User WHERE name=:paramName", User.class);
             query.setParameter("paramName", name);
             users = query.list();
         } catch (HibernateException e) {
@@ -107,7 +107,7 @@ public class UsersDaoImpl implements UsersDao {
         List<User> users = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM User");
+            Query<User> query = session.createQuery("FROM User", User.class);
             query.setFirstResult(fromRow);
             query.setMaxResults(numberOfRows);
             users = query.list();
