@@ -52,7 +52,7 @@ public class UsersController {
             return modelAndView;
         } else {
             ModelAndView modelAndView = new ModelAndView("UsersSearch");
-            modelAndView.addObject("foundUsers", dao.getByName(name));
+            modelAndView.addObject("foundUsers", usersFilteredByName);
             return modelAndView;
         }
     }
